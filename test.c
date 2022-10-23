@@ -14,8 +14,8 @@ struct guy {
 
 int battle(struct guy x, struct guy y);
 int dmg_deal(struct guy a);
-int dmg_calc(struct guy a);
-int self_calc(struct guy a);
+int dmg_calc(struct guy a, int hit);
+int self_calc(struct guy a, int hit);
 
 int main() {
 	struct guy hero, bad;
@@ -38,17 +38,20 @@ int battle(struct guy x, struct guy y) {
                 printf("a. Attack b. Guard c. Item d. Flee\n");
                 fgets(choice, sizeof(choice), stdin);
                 printf("\nYou chose %s\n", choice);
-		if(!strchr(choice, '\n')) {
-            		while(fgetc(stdin)!='\n');
-        	}
-		if (x.hp == 0) {
+		y.hp = dmg_calc(y, dmg_deal(x));
+		printf("\n%d", y.hp);
+		if (x.hp <= 0) {
 			printf("Oh no! You were defeated!");
 			break;
 		}
-		if (y.hp == 0) {
+		else if (y.hp <= 0) {
 			printf("Victory!");
 			break;
 		}
+		else if(!strchr(choice, '\n')) {
+            		while(fgetc(stdin)!='\n');
+        	}
+		
         }
         return 0;
 
@@ -62,12 +65,15 @@ int dmg_deal(struct guy a) {
 
 int dmg_calc(struct guy a, int hit) {
 	int calc;
-	calc = -(1.625 * a.def) + hit;
-	return calc;
+	calc = -(1.25 * a.def) + hit;
+	printf("Took %d damage!", calc);
+	a.hp -= calc;
+	return a.hp;
 }
 
-int self_calc(struct guy a) {
+int self_calc(struct guy a, int hit) {
 	int dmtk;
+	
 }
 
 /*char choice[2];
