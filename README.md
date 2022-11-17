@@ -1,2 +1,2 @@
 # RPGGame
-Simple text based RPG game I am making in C
+RPG engine built in C lang. Intended to have a basic graphical interface and a turn based gameplay style
